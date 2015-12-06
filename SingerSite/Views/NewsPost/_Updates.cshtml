@@ -1,0 +1,16 @@
+﻿@model IEnumerable<SingerSite.Models.IUpdateModel>
+
+@foreach (var item in Model)
+{
+    <div class="hoverable">
+        <div>
+            <a class="boxDynamic" href="@Html.DisplayFor(modelItem => item.Link)">
+                @Html.DisplayFor(modelItem => item.PostDate)
+                <br />
+                Laura has uploaded a new @Html.DisplayFor(modelItem => item.PostType)
+                <br />
+                @Html.DisplayFor(modelItem => item.Title)
+            </a>
+        </div>
+    </div>
+}

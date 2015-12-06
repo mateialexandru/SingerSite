@@ -1,0 +1,87 @@
+﻿@model IEnumerable<SingerSite.Models.SongViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container" data-authorization="Admin" hidden>
+    <div class="boxDynamic">
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+    </div>
+</div>
+<div class="container">
+    @foreach (var item in Model)
+    {            
+        if (item.FilePath == null)
+        { 
+            if(!string.IsNullOrWhiteSpace(item.YouTube))
+            { 
+                <div class="boxDynamic">
+                    <p >
+                        <strong>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </strong>
+                    </p>
+                    <iframe width="520" height="315" src=@Html.DisplayFor(modelItem => item.YouTube) frameborder="0" allowfullscreen></iframe>
+                    <p>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </p>            
+                    <p data-authorization="Admin" hidden>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                    </p>
+                </div>
+            }
+        }
+        else
+        {
+            if (item.FilePath.FileType == SingerSite.Models.FileType.mp3)
+            { 
+                <div class="boxDynamic">
+                    <p >
+                        <strong>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </strong>
+                    </p>
+                    <audio controls>
+                        <source src="~/uploads/music/@item.FilePath.FileName" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                    <p>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </p>            
+                    <p data-authorization="Admin" hidden>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                    </p>
+                </div>
+            }
+            else if (item.FilePath.FileType == SingerSite.Models.FileType.mp4)
+            {
+                <div class="boxDynamic">
+                    <p >
+                        <strong>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </strong>
+                    </p>
+                    <video width="520" height="315" controls>
+                        <source src="~/uploads/music/@item.FilePath.FileName" type="audio/mp4">
+                        Your browser does not support the video element.
+                    </video>
+                    <p>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </p>            
+                    <p data-authorization="Admin" hidden>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                    </p>
+                </div>
+            }
+        }
+    }
+</div>
